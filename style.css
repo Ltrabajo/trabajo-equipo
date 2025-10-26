@@ -42,8 +42,12 @@ header{
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
-     width: 23%;
+    
 }
+.gato img {
+    width: 23%;
+}
+
 
 .dark-mode{
     background-color: black;

@@ -9,7 +9,7 @@
 <body>
     <header class="shadow">
         <div class="container-logo">
-            <img src="A.jpg" alt="Un logo de la pagina"> 
+            <img src="gato.jpg" alt="Un logo de la pagina"> 
         </div>
         <div>
             <button id="dark-mode">Dark Mode</button>
@@ -19,14 +19,14 @@
         <h1>Gatos</h1>
     </section>
 
-    <section class="personaje" id="container-personajes">
+    <section class="gato" id="container-gatos">
     </section>
     <button id="load-more">Cargar más gatos</button>
    
 </body>
 <script>
     function renderLoader (){
-        const container= document.getElementById('container-personajes')
+        const container= document.getElementById('container-gatos')
         const loader= document.createElement('div')
         loader.setAttribute('id', 'loader')
         loader.innerHTML='cargando...'
@@ -40,32 +40,32 @@
 
     let page = 1; // página inicial
 
-    async function get_personajes(){
+    async function get_gatos(){
         const url=`https://api.thecatapi.com/v1/images/search?limit=8&page=${page}`;
         renderLoader()
         const response=await fetch(url)
         const data= await response.json()
-        const container= document.getElementById("container-personajes")
+        const container= document.getElementById("container-gatos")
 
         data.forEach(element => {
             console.log(element);
-            const container_personaje = document.createElement("div")
-            container_personaje.classList.add("personaje")
+            const container_gato = document.createElement("div")
+            container_gato.classList.add("gato")
             const img = document.createElement("img")
             img.src = element.url
-            container_personaje.appendChild(img)
-            container.appendChild(container_personaje)   
+            container_gato.appendChild(img)
+            container.appendChild(container_gato)   
         });
 
         removeLoader()
         page++; // siguiente página para el botón "Cargar más"
     } 
 
-    get_personajes();
+    get_gatos();
 
     const btn = document.getElementById("load-more")
     function loadMore(){
-        get_personajes(); // al hacer click carga 8 más
+        get_gatos(); // al hacer click carga 8 más
     }
     btn.addEventListener("click", loadMore )
 

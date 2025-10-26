@@ -16,12 +16,12 @@
         </div>
     </header>
     <section class="container-title">
-        <h1>Pokemons</h1>
+        <h1>Gatos</h1>
     </section>
 
     <section class="auto" id="container-poke">
     </section>
-    <button id="load-more">Cargar mas pokes</button>
+    <button id="load-more">Cargar más gatos</button>
 </body>
 <script>
     function renderLoader (){
@@ -33,15 +33,15 @@
     }
 
     async function get_poke(){
-        // 🔹 Solo cambié la URL a una API diferente (Pokémon)
-        const url='https://pokeapi.deno.dev/pokemon?limit=20';
+        // 🔹 Solo cambiamos la URL a la API de gatos
+        const url='https://api.thecatapi.com/v1/images/search?limit=10';
         renderLoader()
         const response=await fetch(url)
         const data= await response.json()
         const container= document.getElementById("container-poke")
         const poke= data
 
-        // 🔹 Mantengo tu forEach igualito
+        // 🔹 Mantengo tu forEach exactamente igual
         poke.forEach(async element => {
             console.log(element);
 
@@ -49,7 +49,7 @@
             container_poke.classList.add("auto")
 
             const img = document.createElement("img")
-            img.src = element.image  // ✅ imagen real del Pokémon
+            img.src = element.url  // ✅ imagen real de gato
             container_poke.appendChild(img)
 
             container.appendChild(container_poke)
@@ -62,7 +62,7 @@
 
     const btn = document.getElementById("load-more")
     function loadMore(){
-        console.log("Cargar mas pokes");
+        console.log("Cargar más gatos");
     }
     btn.addEventListener("click", loadMore )
 

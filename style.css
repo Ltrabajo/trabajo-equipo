@@ -36,12 +36,13 @@ header{
     font-size: 85px;
 }
 
-.personaje{
+.gato{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
+     width: 23%;
 }
 
 .dark-mode{

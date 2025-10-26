@@ -19,7 +19,7 @@
         <h1>Gatos</h1>
     </section>
 
-    <section class="gato" id="container-gatos">
+    <section class="gato" id="gato-container">
     </section>
     <button id="load-more">Cargar más gatos</button>
    
@@ -45,12 +45,12 @@
         renderLoader()
         const response=await fetch(url)
         const data= await response.json()
-        const container= document.getElementById("container-gatos")
+        const container= document.getElementById("gato-container")
 
         data.forEach(element => {
             console.log(element);
             const container_gato = document.createElement("div")
-            container_gato.classList.add("gato")
+            container_gato.classList.add("gato-element")
             const img = document.createElement("img")
             img.src = element.url
             container_gato.appendChild(img)

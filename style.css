@@ -36,16 +36,22 @@ header{
     font-size: 85px;
 }
 
-.gato {
+.personaje, #container-gatos {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
-    
-    flex-basis: calc(25% - 16px); 
 }
 
+.gato-elemnt{
+    flex-basis: calc(25% - 16px);
+}
 
+.gato-element img{
+    width: 100%;
+    display: block;
+    border-radius: 8px;
+}
 
 .dark-mode{
     background-color: black;

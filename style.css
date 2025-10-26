@@ -36,17 +36,15 @@ header{
     font-size: 85px;
 }
 
-.gato{
+.gato {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
     
+    flex-basis: calc(25% - 16px); 
 }
-.gato img {
-    width: 23%;
-}
+
 
 
 .dark-mode{

@@ -34,7 +34,7 @@
 
     async function get_poke(){
         // 🔹 Cambio 1: usar endpoint correcto con varios pokémon
-        const url='https://rickandmortyapi.com/';
+        const url='https://rickandmortyapi.com/character';
         renderLoader()
         const response=await fetch(url)
         const data= await response.json()

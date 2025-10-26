@@ -9,66 +9,63 @@
 <body>
     <header class="shadow">
         <div class="container-logo">
-            <img src="A.jpg" alt="Un logo de la pagina">
+            <img src="A.jpg" alt="Un logo de la pagina"> 
         </div>
         <div>
             <button id="dark-mode">Dark Mode</button>
         </div>
     </header>
     <section class="container-title">
-        <h1>Spotify Tracks</h1>
+        <h1>Gatos</h1>
     </section>
 
-    <section class="auto" id="container-spoti">
+    <section class="personaje" id="container-personajes">
     </section>
-    <button id="load-more">Cargar más tracks</button>
+    <button id="load-more">Cargar más gatos</button>
+   
 </body>
 <script>
     function renderLoader (){
-        const container= document.getElementById('container-spoti')
+        const container= document.getElementById('container-personajes')
         const loader= document.createElement('div')
         loader.setAttribute('id', 'loader')
         loader.innerHTML='cargando...'
         container.appendChild(loader)
     }
 
-    async function get_spoti(){
-        // 🔹 JSON de ejemplo con tracks de Spotify
-        const data = [
-            { name: "Blinding Lights", image: "https://i.scdn.co/image/ab67616d0000b2730c24b3a2dbb6d9c90d73d9da" },
-            { name: "Levitating", image: "https://i.scdn.co/image/ab67616d0000b273d4e6f8f9827ef7bbba5c985f" },
-            { name: "Save Your Tears", image: "https://i.scdn.co/image/ab67616d0000b273f3ec0fc1f253d5d909ef1b39" },
-            { name: "Peaches", image: "https://i.scdn.co/image/ab67616d0000b2735b3d6f2f6eac4f5a3f0dca76" }
-        ];
+    function removeLoader(){
+        const loader = document.getElementById('loader');
+        if(loader) loader.remove();
+    }
 
+    let page = 1; // página inicial
+
+    async function get_personajes(){
+        const url=`https://api.thecatapi.com/v1/images/search?limit=8&page=${page}`;
         renderLoader()
-        const container= document.getElementById("container-spoti")
+        const response=await fetch(url)
+        const data= await response.json()
+        const container= document.getElementById("container-personajes")
 
-        data.forEach(async element => {
+        data.forEach(element => {
             console.log(element);
-
-            const container_spoti = document.createElement("div")
-            container_spoti.classList.add("auto")
-
+            const container_personaje = document.createElement("div")
+            container_personaje.classList.add("personaje")
             const img = document.createElement("img")
-            img.src = element.image
-            container_spoti.appendChild(img)
-
-            const title = document.createElement("p")
-            title.textContent = element.name
-            container_spoti.appendChild(title)
-
-            container.appendChild(container_spoti)
+            img.src = element.url
+            container_personaje.appendChild(img)
+            container.appendChild(container_personaje)   
         });
 
         removeLoader()
-    }
+        page++; // siguiente página para el botón "Cargar más"
+    } 
 
-    get_spoti();
+    get_personajes();
 
     const btn = document.getElementById("load-more")
     function loadMore(){
-        console.log("Cargar más tracks");
+        get_personajes(); // al hacer click carga 8 más
     }
     btn.addEventListener("click", loadMore )
 

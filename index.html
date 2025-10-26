@@ -9,7 +9,7 @@
 <body>
     <header class="shadow">
         <div class="container-logo">
-            <img src="A.jpg" alt="Un logo de la pagina"> 
+            <img src="A.jpg" alt="Un logo de la pagina">
         </div>
         <div>
             <button id="dark-mode">Dark Mode</button>
@@ -22,7 +22,6 @@
     <section class="auto" id="container-poke">
     </section>
     <button id="load-more">Cargar mas pokes</button>
-   
 </body>
 <script>
     function renderLoader (){
@@ -32,27 +31,36 @@
         loader.innerHTML='cargando...'
         container.appendChild(loader)
     }
+
     async function get_poke(){
-        const url='https://pokeapi.co/api/v2/pokemon/ditto';
+        const url='https://pokeapi.co/api/v2/pokemon?limit=10';
         renderLoader()
         const response=await fetch(url)
         const data= await response.json()
         const container= document.getElementById("container-poke")
         const poke= data.results
-        poke.forEach(element => {
+
+        poke.forEach(async element => {
             console.log(element);
+
+            const res = await fetch(element.url);
+            const pokeData = await res.json();
+
             const container_poke = document.createElement("div")
             container_poke.classList.add("auto")
+
             const img = document.createElement("img")
-            img.src = element.image
+            img.src = pokeData.sprites.front_default  
             container_poke.appendChild(img)
-            container.appendChild(container_poke)   
+
+            container.appendChild(container_poke)
         });
+
         removeLoader()
-        } 
-    
+    }
 
     get_poke();
+
     const btn = document.getElementById("load-more")
     function loadMore(){
         console.log("Cargar mas pokes");
@@ -69,8 +77,6 @@
         }
     }
     btnDarkMode.addEventListener("click", toggleDarkMode)
-
-
 </script>
 </section>
 </html>

@@ -36,14 +36,14 @@ header{
     font-size: 85px;
 }
 
-.personaje, #container-gatos {
+.personaje, #gato-container {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
 }
 
-.gato-elemnt{
+.gato-element{
     flex-basis: calc(25% - 16px);
 }
 

@@ -33,26 +33,23 @@
     }
 
     async function get_poke(){
-        // 🔹 Cambio 1: usar endpoint correcto con varios pokémon
-        const url='https://rickandmortyapi.com/character';
+        // 🔹 Solo cambié la URL a una API diferente (Pokémon)
+        const url='https://pokeapi.deno.dev/pokemon?limit=20';
         renderLoader()
         const response=await fetch(url)
         const data= await response.json()
         const container= document.getElementById("container-poke")
-        const poke= data.results
+        const poke= data
 
-        // 🔹 Mantengo tu forEach, solo agrego un fetch interno para la imagen
+        // 🔹 Mantengo tu forEach igualito
         poke.forEach(async element => {
             console.log(element);
-
-            const res = await fetch(element.url);
-            const pokeData = await res.json();
 
             const container_poke = document.createElement("div")
             container_poke.classList.add("auto")
 
             const img = document.createElement("img")
-            img.src = element.image  // ✅ imagen real
+            img.src = element.image  // ✅ imagen real del Pokémon
             container_poke.appendChild(img)
 
             container.appendChild(container_poke)

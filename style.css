@@ -11,7 +11,7 @@ header{
 }
 
 .shadow{
-    box-shadow: rgb(0, 0, 0,0.1) 0px 4px 12px;
+    box-shadow: rgb(0, 0, 0,0.1) 0px 4px 12px;  
 }
 
 .container-logo{
@@ -39,18 +39,20 @@ header{
 .personaje, #gato-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    margin: 16px;
     justify-content: center;
 }
 
-.gato-element{
+.gato-element {
     flex-basis: calc(25% - 16px);
 }
 
-.gato-element img{
+.gato-element img {
     width: 100%;
-    display: block;
+    height: 250px; 
+    object-fit: cover; /*CORTA LA IMAGEN */
     border-radius: 8px;
+    display: block;
 }
 
 .dark-mode{

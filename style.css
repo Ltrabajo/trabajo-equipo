@@ -12,7 +12,7 @@ header {
 
     background-color: #f4d03f; 
     color: #3e2723;
-    border-bottom: 5px solid #d35400; /
+    border-bottom: 5px solid #d35400; 
 }
 
 
@@ -38,9 +38,15 @@ header {
     height: 400px;
 }
 
-.container-title h1{
-    font-size: 85px;
+.container-title h1 {
+    font-size: 90px;
+    color: #d35400; /* Naranja cálido, combina con el header */
+    text-shadow: 3px 3px 0 #3e2723; /* Sombra marrón para resaltar */
+    text-align: center;
+    font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif; /* Fuente divertida */
+    letter-spacing: 3px;
 }
+
 
 .personaje, #paisaje-container {
     display: flex;

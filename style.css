@@ -10,10 +10,10 @@ header {
     justify-content: space-between;
     align-items: center;
 
-    background-color: #057aef; /* Puedes cambiar este color por el que quieras */
-    color: white; 
+    background-color: #f4d03f; 
+    color: #3e2723;
+    border-bottom: 5px solid #d35400; /
 }
-
 
 
 .shadow{

@@ -15,69 +15,74 @@
             <button id="dark-mode">Dark Mode</button>
         </div>
     </header>
+
     <section class="container-title">
-        <h1>Gatos</h1>
+        <h1>Perros</h1>
     </section>
 
-    <section class="gato" id="gato-container">
+    <section class="paisaje" id="paisaje-container">
     </section>
-    <button id="load-more">Cargar más gatos</button>
+
+    <button id="load-more">Cargar más perros</button>
    
-</body>
-<script>
-    function renderLoader (){
-        const container= document.getElementById('gato-container')
-        const loader= document.createElement('div')
-        loader.setAttribute('id', 'loader')
-        loader.innerHTML='cargando...'
-        container.appendChild(loader)
-    }
-
-    function removeLoader(){
-        const loader = document.getElementById('loader');
-        if(loader) loader.remove();
-    }
-
-    let page = 1; 
-
-    async function get_gatos(){
-        const url=`https://api.thecatapi.com/v1/images/search?limit=8&page=${page}`;
-        renderLoader()
-        const response=await fetch(url)
-        const data= await response.json()
-        const container= document.getElementById("gato-container")
-
-        data.forEach(element => {
-            console.log(element);
-            const container_gato = document.createElement("div")
-            container_gato.classList.add("gato-element")
-            const img = document.createElement("img")
-            img.src = element.url
-            container_gato.appendChild(img)
-            container.appendChild(container_gato)   
-        });
-
-        removeLoader()
-        page++; 
-    } 
-
-    get_gatos();
-
-    const btn = document.getElementById("load-more")
-    function loadMore(){
-        get_gatos(); 
-    }
-    btn.addEventListener("click", loadMore )
-
-    const btnDarkMode = document.getElementById("dark-mode")
-    function toggleDarkMode(){
-        document.body.classList.toggle("dark-mode");
-        if (document.body.classList.contains("dark-mode")){
-            btnDarkMode.textContent= "White-Mode";
-        } else {
-            btnDarkMode.textContent= "dark-mode"
+    <script>
+        function renderLoader (){
+            const container = document.getElementById('paisaje-container');
+            const loader = document.createElement('div');
+            loader.setAttribute('id', 'loader');
+            loader.innerHTML = 'Cargando...';
+            container.appendChild(loader);
         }
-    }
-    btnDarkMode.addEventListener("click", toggleDarkMode)
-</script>
+
+        function removeLoader(){
+            const loader = document.getElementById('loader');
+            if(loader) loader.remove();
+        }
+
+        let page = 1;
+
+        async function get_perros() {
+            const url = `https://api.thedogapi.com/v1/images/search?limit=8&page=${page}`;
+            renderLoader();
+            const response = await fetch(url);
+            const data = await response.json();
+            const container = document.getElementById("paisaje-container");
+
+            data.forEach(element => {
+                const container_perro = document.createElement("div");
+                container_perro.classList.add("paisaje-element");
+                const img = document.createElement("img");
+                img.src = element.url;
+                container_perro.appendChild(img);
+                container.appendChild(container_perro);
+            });
+
+            removeLoader();
+            page++;
+        }
+
+      get_perros();
+
+        const btn = document.getElementById("load-more")
+        function loadMore(){
+            get_perros(); 
+        }
+        btn.addEventListener("click", loadMore )
+
+        const btnDarkMode = document.getElementById("dark-mode")
+        function toggleDarkMode(){
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")){
+                btnDarkMode.textContent= "White Mode";
+            } else {
+                btnDarkMode.textContent= "Dark Mode";
+            }
+        }
+        btnDarkMode.addEventListener("click", toggleDarkMode)
+    </script>
+<div class="dog-container">
+    <img src="ANI.gif" alt="Perro animado">
+</div>
+
+</body>
 </html>

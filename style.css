@@ -3,12 +3,19 @@ body{
     padding: 0;
 }
 
-header{
+header {
     display: flex;
     flex-direction: row;
     padding: 20px;
     justify-content: space-between;
+    align-items: center;
+
+    background-image: url("fondo.jpg"); 
+    background-size: cover;      
+    background-position: center; 
+    background-repeat: no-repeat; 
 }
+
 
 .shadow{
     box-shadow: rgb(0, 0, 0,0.1) 0px 4px 12px;  

@@ -10,11 +10,10 @@ header {
     justify-content: space-between;
     align-items: center;
 
-    background-image: url("fondo.jpg"); 
-    background-size: cover;      
-    background-position: center; 
-    background-repeat: no-repeat; 
+    background-color: #057aef; /* Puedes cambiar este color por el que quieras */
+    color: white; 
 }
+
 
 
 .shadow{

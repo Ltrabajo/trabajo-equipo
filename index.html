@@ -4,28 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto 2ndo Parcial</title>
+    <!-- Enlazamos el CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- ===== HEADER: Logo + Dark Mode ===== -->
     <header class="shadow">
         <div class="container-logo">
             <img src="gato.jpg" alt="Un logo de la pagina"> 
         </div>
         <div>
-            <button id="dark-mode">Dark Mode</button>
+            <button id="dark-mode">Dark Mode </button>
         </div>
     </header>
 
+    <!-- ===== TÍTULO PRINCIPAL ===== -->
     <section class="container-title">
-        <h1>Perros</h1>
+        <h1>🐾 Dogs 🐾</h1>
     </section>
 
+    <!-- ===== CONTENEDOR DE PERROS ===== -->
     <section class="paisaje" id="paisaje-container">
+        <!-- Las imágenes de los perros se agregan aquí con JavaScript -->
     </section>
 
-    <button id="load-more">Cargar más perros</button>
+    <!-- ===== BOTÓN CARGAR MÁS ===== -->
+    <button id="load-more">Cargar más perros </button>
    
     <script>
+        // ===== FUNCIONES DE CARGA =====
+        // Muestra "Cargando..." mientras se traen imágenes
         function renderLoader (){
             const container = document.getElementById('paisaje-container');
             const loader = document.createElement('div');
@@ -34,55 +42,99 @@
             container.appendChild(loader);
         }
 
+        // Elimina el "Cargando..."
         function removeLoader(){
             const loader = document.getElementById('loader');
             if(loader) loader.remove();
         }
 
+        // Variable para llevar la cuenta de la página de la API
         let page = 1;
 
+        // Función principal para traer los perros
         async function get_perros() {
             const url = `https://api.thedogapi.com/v1/images/search?limit=8&page=${page}`;
-            renderLoader();
-            const response = await fetch(url);
-            const data = await response.json();
+            renderLoader(); // mostrar texto de carga
+            const response = await fetch(url); // traer datos de la API
+            const data = await response.json(); // convertir datos a JSON
             const container = document.getElementById("paisaje-container");
 
+            // Por cada perro recibido
             data.forEach(element => {
+                // Crear un contenedor para cada perro
                 const container_perro = document.createElement("div");
                 container_perro.classList.add("paisaje-element");
+
+                // Crear la imagen
                 const img = document.createElement("img");
                 img.src = element.url;
                 container_perro.appendChild(img);
+
+                // Crear la frase debajo de la imagen
+                const texto = document.createElement("p");
+                texto.textContent = "🐾 Guau Guau Numero " + (container.children.length + 1); // número automático
+                texto.classList.add("frase-perro"); // clase para el estilo
+                container_perro.appendChild(texto);
+
+                // Agregar el contenedor al main
                 container.appendChild(container_perro);
             });
 
-            removeLoader();
-            page++;
+            removeLoader(); // quitar "Cargando..."
+            page++; // aumentar página para próxima carga
         }
 
-      get_perros();
+        // Cargar las primeras imágenes al iniciar
+        get_perros();
 
-        const btn = document.getElementById("load-more")
+        // ===== BOTÓN "CARGAR MÁS PERROS" =====
+        const btn = document.getElementById("load-more");
         function loadMore(){
-            get_perros(); 
+            get_perros(); // llama la misma función para traer más perros
         }
-        btn.addEventListener("click", loadMore )
+        btn.addEventListener("click", loadMore);
 
-        const btnDarkMode = document.getElementById("dark-mode")
+        // ===== MODO OSCURO =====
+        const btnDarkMode = document.getElementById("dark-mode");
         function toggleDarkMode(){
-            document.body.classList.toggle("dark-mode");
+            document.body.classList.toggle("dark-mode"); // agrega o quita la clase dark-mode
             if (document.body.classList.contains("dark-mode")){
-                btnDarkMode.textContent= "White Mode";
+                btnDarkMode.textContent= "White Mode"; // cambiar texto del botón
             } else {
                 btnDarkMode.textContent= "Dark Mode";
             }
         }
-        btnDarkMode.addEventListener("click", toggleDarkMode)
+        btnDarkMode.addEventListener("click", toggleDarkMode);
+
+        // ===== VISOR: Imagen grande al hacer clic =====
+        document.addEventListener("click", function(e){
+            // Verifica si se hizo clic en una imagen dentro de un paisaje-element
+            if(e.target.tagName === "IMG" && e.target.parentElement.classList.contains("paisaje-element")){
+                // Crear fondo oscuro
+                const fondo = document.createElement("div");
+                fondo.classList.add("visor");
+
+                // Crear imagen grande
+                const imgGrande = document.createElement("img");
+                imgGrande.src = e.target.src; // misma imagen que clicaste
+                fondo.appendChild(imgGrande);
+
+                // Agregar al body
+                document.body.appendChild(fondo);
+
+                // Cerrar al hacer clic en cualquier parte del visor
+                fondo.addEventListener("click", function(){
+                    fondo.remove();
+                });
+            }
+        });
+
     </script>
-<div class="dog-container">
-    <img src="ANI.gif" alt="Perro animado">
-</div>
+
+    <!-- ===== PERRO ANIMADO EN ESQUINA ===== -->
+    <div class="dog-container">
+        <img src="ANI.gif" alt="Perro animado">
+    </div>
 
 </body>
 </html>

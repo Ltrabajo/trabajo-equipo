@@ -1,37 +1,41 @@
-body{
-    margin: 0;
-    padding: 0;
+/* ===== ESTILOS GENERALES ===== */
+body {
+    margin: 0; /* quitar margen por defecto */
+    padding: 0; /* quitar padding por defecto */
+    background-color: #ffeeb7; /* color de fondo */
+    font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif; /* fuente divertida */
 }
 
+/* ===== HEADER ===== */
 header {
-    display: flex;
-    flex-direction: row;
+    display: flex; /* usar flex para alinear elementos */
+    justify-content: space-between; /* espacio entre logo y botón */
+    align-items: center; /* centrar vertical */
     padding: 20px;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: #f4d03f; 
+    background-color: #f4d03f;
     color: #3e2723;
-    border-bottom: 5px solid #d35400; 
+    border-bottom: 5px solid #d35400;
 }
 
-
-.shadow{
-    box-shadow: rgb(0, 0, 0,0.1) 0px 4px 12px;  
+/* sombra para el header */
+.shadow {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.container-logo{
+/* ===== LOGO ===== */
+.container-logo {
     height: 30px;
     width: 30px;
 }
 
-.container-logo img{
-    height: 100%;
+.container-logo img {
     width: 100%;
-    object-fit: cover;
+    height: 100%;
+    object-fit: cover; /* que no se deforme la imagen */
 }
 
-.container-title{
+/* ===== TÍTULO PRINCIPAL ===== */
+.container-title {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,61 +43,110 @@ header {
 }
 
 .container-title h1 {
-    font-size: 90px;
-    color: #d35400; /* Naranja cálido, combina con el header */
-    text-shadow: 3px 3px 0 #3e2723; /* Sombra marrón para resaltar */
+    font-size: 90px; /* tamaño grande */
+    color: #d35400;
+    text-shadow: 3px 3px 0 #3e2723; /* sombra para resaltar */
     text-align: center;
-    font-family: "Comic Sans MS", "Arial Rounded MT Bold", sans-serif; /* Fuente divertida */
     letter-spacing: 3px;
 }
 
-
+/* ===== CONTENEDOR DE PERROS ===== */
 .personaje, #paisaje-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* que las imágenes se acomoden en varias filas */
     margin: 16px;
     justify-content: center;
 }
 
+/* cada contenedor individual de un perro */
 .paisaje-element {
-    flex-basis: calc(25% - 16px);
+    flex-basis: calc(25% - 16px); /* 4 elementos por fila */
     margin: 8px;
 }
 
+/* imagen de cada perro */
 .paisaje-element img {
     width: 100%;
     height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
+    object-fit: cover; /* que no se deforme */
+    border-radius: 8px; /* bordes redondeados */
     display: block;
+    cursor: pointer; /* indica que se puede clicar */
 }
 
-.dark-mode{
-    background-color: black;
-    color: #fff;
+/* ===== FRASE DEBAJO DE CADA PERRO ===== */
+.frase-perro {
+    text-align: center; /* centrado */
+    font-weight: bold;
+    font-size: 18px;
+    color: #3e2723;
+    margin-top: 8px; /* espacio con la imagen */
 }
-/* Estilo y animación para el perro en la esquina inferior derecha */
+
+/* ===== MODO OSCURO ===== */
+.dark-mode {
+    background-color: black; /* fondo negro */
+    color: #fff; /* texto blanco */
+}
+
+/* ===== PERRO ANIMADO EN ESQUINA ===== */
 .dog-container {
-    position: fixed;
+    position: fixed; /* siempre visible en la esquina */
     bottom: 20px; 
     right: 20px;  
     width: 100px; 
     height: 100px;
-    z-index: 1000;
+    z-index: 1000; /* por encima de otros elementos */
     cursor: pointer;
-    animation: bounce 2s infinite; }
+    animation: bounce 2s infinite; /* animación de rebote */
+}
 
 .dog-container img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: contain; /* mantener proporciones */
 }
 
+/* animación de rebote */
 @keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-15px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* ===== BOTÓN "CARGAR MÁS PERROS" ===== */
+#load-more {
+    background: #d35400;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: block;
+    margin: 20px auto; /* centrar */
+    font-family: "Comic Sans MS", sans-serif;
+    cursor: pointer;
+}
+
+#load-more:hover {
+    background: #a84300; /* color al pasar el mouse */
+}
+
+/* ===== VISOR: Imagen grande al clic ===== */
+.visor {
+    position: fixed; /* ocupa toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8); /* fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* por encima de todo */
+}
+
+.visor img {
+    max-width: 80%; /* máximo ancho 80% de la pantalla */
+    max-height: 80%; /* máximo alto 80% de la pantalla */
+    border-radius: 12px; /* bordes redondeados */
+    box-shadow: 0 0 20px white; /* sombra blanca alrededor */
 }

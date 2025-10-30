@@ -150,3 +150,9 @@ header {
     border-radius: 12px; /* bordes redondeados */
     box-shadow: 0 0 20px white; /* sombra blanca alrededor */
 }
+.dog-container:active {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 10px #ff9900);
+    transition: all 0.2s;
+}
+

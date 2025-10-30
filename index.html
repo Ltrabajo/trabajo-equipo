@@ -1,140 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"> <!-- Indica que usamos caracteres en español (acentos, ñ, etc.) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Hace que la página se adapte a celulares -->
     <title>Proyecto 2ndo Parcial</title>
-    <!-- Enlazamos el CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css"> <!-- Enlaza el archivo CSS donde van los estilos -->
 </head>
 <body>
-    <!-- ===== HEADER: Logo + Dark Mode ===== -->
-    <header class="shadow">
+    <!-- ===== ENCABEZADO ===== -->
+    <header class="shadow"> <!-- Sección superior con sombra -->
         <div class="container-logo">
-            <img src="gato.jpg" alt="Un logo de la pagina"> 
+            <img src="gato.jpg" alt="Un logo de la pagina">  <!-- Logo que aparece en el encabezado -->
         </div>
         <div>
-            <button id="dark-mode">Dark Mode </button>
+            <button id="dark-mode">Dark Mode</button> <!-- Botón para activar/desactivar el modo oscuro -->
         </div>
     </header>
 
     <!-- ===== TÍTULO PRINCIPAL ===== -->
     <section class="container-title">
-        <h1>🐾 Dogs 🐾</h1>
+        <h1>🐾 Dogs 🐾</h1> <!-- Título principal de la página -->
     </section>
 
     <!-- ===== CONTENEDOR DE PERROS ===== -->
-    <section class="paisaje" id="paisaje-container">
-        <!-- Las imágenes de los perros se agregan aquí con JavaScript -->
-    </section>
+    <section id="paisaje-container"></section> <!-- Aquí se insertarán las imágenes de perros con JS -->
 
-    <!-- ===== BOTÓN CARGAR MÁS ===== -->
-    <button id="load-more">Cargar más perros </button>
-   
+    <!-- ===== BOTÓN PARA CARGAR MÁS ===== -->
+    <button id="load-more">Cargar más perros</button> <!-- Al hacer clic, carga más imágenes -->
+
+    <!-- ===== PERRO ANIMADO EN ESQUINA ===== -->
+    <div class="dog-container">
+        <img src="ANI.gif" alt="Perro animado"> <!-- Imagen GIF de un perro animado -->
+    </div>
+
+    <!-- ===== AUDIO DEL LADRIDO ===== -->
+    <audio id="bark-sound" src="ladrido.mp3"></audio> <!-- Sonido que se reproducirá al hacer clic en el perro -->
+
+    <!-- ===== SCRIPT (CÓDIGO JAVASCRIPT) ===== -->
     <script>
-        // ===== FUNCIONES DE CARGA =====
-        // Muestra "Cargando..." mientras se traen imágenes
-        function renderLoader (){
-            const container = document.getElementById('paisaje-container');
-            const loader = document.createElement('div');
-            loader.setAttribute('id', 'loader');
-            loader.innerHTML = 'Cargando...';
-            container.appendChild(loader);
-        }
+        // ===== CARGAR IMÁGENES DE PERROS =====
 
-        // Elimina el "Cargando..."
-        function removeLoader(){
-            const loader = document.getElementById('loader');
-            if(loader) loader.remove();
-        }
+        let page = 1; // Página inicial (para traer diferentes perros cada vez)
 
-        // Variable para llevar la cuenta de la página de la API
-        let page = 1;
-
-        // Función principal para traer los perros
+        // Función que pide imágenes de perros desde una API
         async function get_perros() {
+            // Dirección del servicio que da fotos aleatorias de perros
             const url = `https://api.thedogapi.com/v1/images/search?limit=8&page=${page}`;
-            renderLoader(); // mostrar texto de carga
-            const response = await fetch(url); // traer datos de la API
-            const data = await response.json(); // convertir datos a JSON
-            const container = document.getElementById("paisaje-container");
+            
+            // Pedimos los datos (esperamos a que el servidor responda)
+            const respuesta = await fetch(url);
+            
+            // Convertimos la respuesta a formato JSON (lista de perros)
+            const data = await respuesta.json();
+            
+            // Seleccionamos el contenedor donde vamos a poner las imágenes
+            const contenedor = document.getElementById("paisaje-container");
 
-            // Por cada perro recibido
-            data.forEach(element => {
-                // Crear un contenedor para cada perro
-                const container_perro = document.createElement("div");
-                container_perro.classList.add("paisaje-element");
+            // Recorremos cada perro recibido
+            data.forEach((elemento) => {
+                const div = document.createElement("div"); // Creamos un div para cada perro
+                div.classList.add("paisaje-element"); // Le damos una clase para estilos CSS
 
-                // Crear la imagen
-                const img = document.createElement("img");
-                img.src = element.url;
-                container_perro.appendChild(img);
+                const img = document.createElement("img"); // Creamos la imagen del perro
+                img.src = elemento.url; // Asignamos la dirección de la imagen
+                div.appendChild(img); // Metemos la imagen dentro del div
 
-                // Crear la frase debajo de la imagen
-                const texto = document.createElement("p");
-                texto.textContent = "🐾 Guau Guau Numero " + (container.children.length + 1); // número automático
-                texto.classList.add("frase-perro"); // clase para el estilo
-                container_perro.appendChild(texto);
+                const texto = document.createElement("p"); // Creamos un texto debajo
+                texto.textContent = "🐾 Guau Guau número " + (contenedor.children.length + 1); // Contador automático
+                div.appendChild(texto); // Lo añadimos al div
 
-                // Agregar el contenedor al main
-                container.appendChild(container_perro);
+                contenedor.appendChild(div); // Finalmente, añadimos todo al contenedor principal
             });
 
-            removeLoader(); // quitar "Cargando..."
-            page++; // aumentar página para próxima carga
+            page++; // Aumentamos la página para que la siguiente carga muestre otros perros
         }
 
-        // Cargar las primeras imágenes al iniciar
+        // Llamamos a la función para cargar los primeros perros al abrir la página
         get_perros();
 
-        // ===== BOTÓN "CARGAR MÁS PERROS" =====
-        const btn = document.getElementById("load-more");
-        function loadMore(){
-            get_perros(); // llama la misma función para traer más perros
-        }
-        btn.addEventListener("click", loadMore);
+        // Cuando se presione el botón "Cargar más", llamamos otra vez la función
+        document.getElementById("load-more").addEventListener("click", get_perros);
 
         // ===== MODO OSCURO =====
-        const btnDarkMode = document.getElementById("dark-mode");
-        function toggleDarkMode(){
-            document.body.classList.toggle("dark-mode"); // agrega o quita la clase dark-mode
-            if (document.body.classList.contains("dark-mode")){
-                btnDarkMode.textContent= "White Mode"; // cambiar texto del botón
+        const botonDark = document.getElementById("dark-mode"); // Seleccionamos el botón
+
+        botonDark.addEventListener("click", function() { // Detectamos clic en el botón
+            document.body.classList.toggle("dark-mode"); // Alternamos entre modo claro/oscuro
+            // Cambiamos el texto del botón según el modo actual
+            if (document.body.classList.contains("dark-mode")) {
+                botonDark.textContent = "White Mode";
             } else {
-                btnDarkMode.textContent= "Dark Mode";
+                botonDark.textContent = "Dark Mode";
             }
-        }
-        btnDarkMode.addEventListener("click", toggleDarkMode);
+        });
 
-        // ===== VISOR: Imagen grande al hacer clic =====
-        document.addEventListener("click", function(e){
-            // Verifica si se hizo clic en una imagen dentro de un paisaje-element
-            if(e.target.tagName === "IMG" && e.target.parentElement.classList.contains("paisaje-element")){
-                // Crear fondo oscuro
-                const fondo = document.createElement("div");
-                fondo.classList.add("visor");
+        // ===== VISOR DE IMAGEN GRANDE =====
+        document.addEventListener("click", function(e) {
+            // Verificamos si se hizo clic sobre una imagen de perro
+            if (e.target.tagName === "IMG" && e.target.parentElement.classList.contains("paisaje-element")) {
+                const fondo = document.createElement("div"); // Creamos un fondo oscuro
+                fondo.classList.add("visor"); // Le damos una clase (para estilo oscuro)
 
-                // Crear imagen grande
-                const imgGrande = document.createElement("img");
-                imgGrande.src = e.target.src; // misma imagen que clicaste
-                fondo.appendChild(imgGrande);
+                const grande = document.createElement("img"); // Creamos una imagen grande
+                grande.src = e.target.src; // Le ponemos la misma imagen del clic
+                fondo.appendChild(grande); // Metemos la imagen al fondo
 
-                // Agregar al body
-                document.body.appendChild(fondo);
+                document.body.appendChild(fondo); // Mostramos el visor en la página
 
-                // Cerrar al hacer clic en cualquier parte del visor
-                fondo.addEventListener("click", function(){
+                // Si se hace clic en cualquier parte del visor, se cierra
+                fondo.addEventListener("click", function() {
                     fondo.remove();
                 });
             }
         });
 
-    </script>
+        // ===== SONIDO DE LADRIDO =====
+        const bark = document.getElementById("bark-sound"); // Tomamos el sonido
+        const dog = document.querySelector(".dog-container"); // Tomamos el div del perro animado
 
-    <!-- ===== PERRO ANIMADO EN ESQUINA ===== -->
-    <div class="dog-container">
-        <img src="ANI.gif" alt="Perro animado">
-    </div>
+        // Cuando se hace clic en el perro, suena el ladrido
+        dog.addEventListener("click", function() {
+            bark.currentTime = 0; // Si ya está sonando, lo reinicia
+            bark.play(); // Reproduce el sonido
+        });
+    </script>
 
 </body>
 </html>
